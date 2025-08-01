@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Contact Stager</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <h1>ZoomInfo to Orion Contact Stager</h1>
+
+  <!-- Upload ZoomInfo CSV -->
+  <label>Upload ZoomInfo CSV:</label>
+  <input type="file" id="csvFileInput" accept=".csv" /><br /><br />
+
+  <!-- Static input fields -->
+  <label>Staging Owner ID:</label>
+  <input type="text" id="ownerId" /><br />
+
+  <label>Sales Group:</label>
+  <input type="text" id="salesGroup" value="SA"/><br />
+
+  <label>Contact Input Source:</label>
+  <input type="text" id="inputSource" value="User Generated"/><br />
+
+  <label>Origin:</label>
+  <input type="text" id="origin" /><br />
+
+  <label>Origin Date ('yyyy-mm-dd):</label>
+  <input type="text" id="originDate" placeholder="('2025-07-31)" /><br />
+
+  <label>Country Code:</label>
+  <input type="text" id="countryCode" value="US"/><br /><br />
+
+
+  <h4>Bulk Paste Company Names</h4>
+    <textarea id="bulkCompanyPaste" rows="6" cols="40" placeholder="Paste company names here, one per line"></textarea><br>
+    <button type="button" id="pasteCompanyBtn">Add Unique Rows</button><br><br>
+
+
+  <h3>Manual Account Mapping</h3>
+    <table id="accountTable" border="1">
+    <thead>
+        <tr>
+        <th>Company Name (ZoomInfo)</th>
+        <th>Account ID</th>
+        <th>Account Name (CRM)</th>
+        <th>Remove</th>
+        </tr>
+    </thead>
+    <tbody id="accountTableBody"></tbody>
+    </table>
+    <button type="button" id="addRowBtn">Add Row</button>
+    <br /><br />
+
+
+  <!-- Process button -->
+  <button id="processBtn">Generate Staged CSV</button><br /><br />
+
+  <!-- Download link -->
+  <a id="downloadLink" style="display:none;">Download Staged File</a>
+
+  <script src="script.js"></script>
+</body>
+</html>
