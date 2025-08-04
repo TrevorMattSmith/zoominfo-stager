@@ -187,11 +187,14 @@ document.getElementById('processBtn').addEventListener('click', () => {
     });
 
     const stagedHeaders = Object.keys(stagedRows[0]);
-    const stagedCsv = [stagedHeaders.join(',')].concat(
+    /*const stagedCsv = [stagedHeaders.join(',')].concat(
       stagedRows.map(row => stagedHeaders.map(h => `"${row[h] || ''}"`).join(','))
     ).join('\n');
+    */
 
-    downloadCSV(stagedCsv);
+    //downloadCSV(stagedCsv);
+    downloadExcel(stagedRows);
+
   };
 
   reader.readAsText(file);
@@ -207,6 +210,13 @@ function downloadCSV(csvContent) {
   link.textContent = 'Download Staged CSV';
 }
 
+function downloadExcel(stagedRows) {
+  const worksheet = XLSX.utils.json_to_sheet(stagedRows);
+  const workbook = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(workbook, worksheet, "Staged Contacts");
+
+  XLSX.writeFile(workbook, "staged_contacts.xlsx");
+}
 
 
 
