@@ -186,13 +186,40 @@ document.getElementById('processBtn').addEventListener('click', () => {
       };
     });
 
-    const stagedHeaders = Object.keys(stagedRows[0]);
+    //const stagedHeaders = Object.keys(stagedRows[0]);
     /*const stagedCsv = [stagedHeaders.join(',')].concat(
       stagedRows.map(row => stagedHeaders.map(h => `"${row[h] || ''}"`).join(','))
     ).join('\n');
     */
 
     //downloadCSV(stagedCsv);
+
+    const originInput = document.getElementById('origin').value.trim();
+    const originDateInput = document.getElementById('originDate').value.trim();
+
+    // List of allowed origins
+    const allowedOrigins = [
+      "American Banker", "Behoerden Spiegel", "Brightvision", "ClientIQ",
+      "Common Wealth", "Company Homepage", "Company Information",
+      "Direct contact (meeting or incoming call/e-mail)", "Eight", "Facebook",
+      "GovWin IQ", "Grow Nordic", "Hoover's", "IBISWorld", "IDA", "Insight Event",
+      "Instagram", "JMP", "Kakao Talk", "Leadership Federal Government Insight",
+      "Legacy", "Line", "LinkedIn", "Markedsforing", "Marketing-BOERSE GmbH",
+      "Money Live", "Personal Card / Business Card", "Retail Institute Scandinavia",
+      "SAS Chat", "Sophia for Retail and Manufacturing", "Tech Target", "Twitter",
+      "WeChat", "Wednesday Relations", "Weibo", "XING"
+    ];
+
+    // Check origin
+    if (!allowedOrigins.includes(originInput)) {
+      alert(`Warning: "${originInput}" is not a recognized Origin.`);
+    }
+
+   
+    if (!isValidOriginDate(originDateInput)) {
+      alert(`Warning: "${originDateInput}" is not a valid Origin Date. Use format like '2025-08-19 with a valid calendar date.`);
+    }
+
     downloadExcel(stagedRows);
 
   };
@@ -200,6 +227,7 @@ document.getElementById('processBtn').addEventListener('click', () => {
   reader.readAsText(file);
 });
 
+/*
 function downloadCSV(csvContent) {
   const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
   const link = document.getElementById('downloadLink');
@@ -209,6 +237,7 @@ function downloadCSV(csvContent) {
   link.style.display = 'inline';
   link.textContent = 'Download Staged CSV';
 }
+*/
 
 function downloadExcel(stagedRows) {
   const worksheet = XLSX.utils.json_to_sheet(stagedRows);
@@ -218,5 +247,23 @@ function downloadExcel(stagedRows) {
   XLSX.writeFile(workbook, "staged_contacts.xlsx");
 }
 
+function isValidOriginDate(dateStr) {
+  const formatRegex = /^'\d{4}-\d{2}-\d{2}$/;
+  if (!formatRegex.test(dateStr)) return false;
+
+  const cleanDate = dateStr.slice(1);
+  const [yearStr, monthStr, dayStr] = cleanDate.split("-");
+  const year = Number(yearStr);
+  const month = Number(monthStr);
+  const day = Number(dayStr);
+
+  // Real date validity check
+  const date = new Date(year, month - 1, day);
+  return (
+    date.getFullYear() === year &&
+    date.getMonth() === month - 1 &&
+    date.getDate() === day
+  );
+}
 
 

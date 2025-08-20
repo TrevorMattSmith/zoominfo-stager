@@ -70,3 +70,26 @@ table th {
   font-weight: bold;
   color: #2c3e50;
 }
+
+/* Style the input tied to the datalist */
+input[list] {
+  width: 100%;
+  padding: 8px;
+  font-size: 14px;
+  font-family: inherit;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  appearance: none; /* remove OS-specific styling */
+  background-color: white;
+}
+
+/* Optionally: match font and text behavior of other fields */
+input[list]::placeholder {
+  color: #999;
+}
+
+/* Fix for Firefox where it shows a dropdown arrow */
+input[list]::-webkit-calendar-picker-indicator {
+  display: none;
+}
